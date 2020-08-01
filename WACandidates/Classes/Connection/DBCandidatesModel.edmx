@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_CandidatesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TB_candidate_information">
+          <Key>
+            <PropertyRef Name="IN_candidate_id" />
+          </Key>
+          <Property Name="IN_candidate_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VC_name" Type="varchar" MaxLength="100" />
+          <Property Name="VC_email" Type="varchar" MaxLength="100" />
+          <Property Name="VC_telephone" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TB_interview_information">
+          <Key>
+            <PropertyRef Name="IN_interview_id" />
+          </Key>
+          <Property Name="IN_interview_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IN_candidate_id" Type="int" />
+          <Property Name="VC_interview_type" Type="varchar" MaxLength="100" />
+          <Property Name="DT_date_interview" Type="datetime" />
+          <Property Name="VC_interview_form" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__TB_interv__IN_ca__398D8EEE">
+          <End Role="TB_candidate_information" Type="Self.TB_candidate_information" Multiplicity="0..1" />
+          <End Role="TB_interview_information" Type="Self.TB_interview_information" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_candidate_information">
+              <PropertyRef Name="IN_candidate_id" />
+            </Principal>
+            <Dependent Role="TB_interview_information">
+              <PropertyRef Name="IN_candidate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_CandidatesModelStoreContainer">
+          <EntitySet Name="TB_candidate_information" EntityType="Self.TB_candidate_information" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_interview_information" EntityType="Self.TB_interview_information" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__TB_interv__IN_ca__398D8EEE" Association="Self.FK__TB_interv__IN_ca__398D8EEE">
+            <End Role="TB_candidate_information" EntitySet="TB_candidate_information" />
+            <End Role="TB_interview_information" EntitySet="TB_interview_information" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_CandidatesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TB_candidate_information">
+          <Key>
+            <PropertyRef Name="IN_candidate_id" />
+          </Key>
+          <Property Name="IN_candidate_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VC_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VC_email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VC_telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_interview_information" Relationship="Self.FK__TB_interv__IN_ca__398D8EEE" FromRole="TB_candidate_information" ToRole="TB_interview_information" />
+        </EntityType>
+        <EntityType Name="TB_interview_information">
+          <Key>
+            <PropertyRef Name="IN_interview_id" />
+          </Key>
+          <Property Name="IN_interview_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IN_candidate_id" Type="Int32" />
+          <Property Name="VC_interview_type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DT_date_interview" Type="DateTime" Precision="3" />
+          <Property Name="VC_interview_form" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_candidate_information" Relationship="Self.FK__TB_interv__IN_ca__398D8EEE" FromRole="TB_interview_information" ToRole="TB_candidate_information" />
+        </EntityType>
+        <Association Name="FK__TB_interv__IN_ca__398D8EEE">
+          <End Role="TB_candidate_information" Type="Self.TB_candidate_information" Multiplicity="0..1" />
+          <End Role="TB_interview_information" Type="Self.TB_interview_information" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_candidate_information">
+              <PropertyRef Name="IN_candidate_id" />
+            </Principal>
+            <Dependent Role="TB_interview_information">
+              <PropertyRef Name="IN_candidate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_CandidatesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TB_candidate_information" EntityType="Self.TB_candidate_information" />
+          <EntitySet Name="TB_interview_information" EntityType="Self.TB_interview_information" />
+          <AssociationSet Name="FK__TB_interv__IN_ca__398D8EEE" Association="Self.FK__TB_interv__IN_ca__398D8EEE">
+            <End Role="TB_candidate_information" EntitySet="TB_candidate_information" />
+            <End Role="TB_interview_information" EntitySet="TB_interview_information" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_CandidatesModelStoreContainer" CdmEntityContainer="DB_CandidatesEntities">
+          <EntitySetMapping Name="TB_candidate_information">
+            <EntityTypeMapping TypeName="DB_CandidatesModel.TB_candidate_information">
+              <MappingFragment StoreEntitySet="TB_candidate_information">
+                <ScalarProperty Name="IN_candidate_id" ColumnName="IN_candidate_id" />
+                <ScalarProperty Name="VC_name" ColumnName="VC_name" />
+                <ScalarProperty Name="VC_email" ColumnName="VC_email" />
+                <ScalarProperty Name="VC_telephone" ColumnName="VC_telephone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_interview_information">
+            <EntityTypeMapping TypeName="DB_CandidatesModel.TB_interview_information">
+              <MappingFragment StoreEntitySet="TB_interview_information">
+                <ScalarProperty Name="IN_interview_id" ColumnName="IN_interview_id" />
+                <ScalarProperty Name="IN_candidate_id" ColumnName="IN_candidate_id" />
+                <ScalarProperty Name="VC_interview_type" ColumnName="VC_interview_type" />
+                <ScalarProperty Name="DT_date_interview" ColumnName="DT_date_interview" />
+                <ScalarProperty Name="VC_interview_form" ColumnName="VC_interview_form" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
